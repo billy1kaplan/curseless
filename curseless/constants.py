@@ -1,0 +1,17 @@
+CTLC = 'CTCL'
+RET = 'RET'
+TAB = 'TAB'
+LEFT = 'LEFT'
+RIGHT = 'RIGHT'
+DEL = 'DEL'
+UP = 'UP'
+DOWN = 'DOWN'
+
+VLINE = '|'
+HLINE = '-'
+
+LL_CORNER = "└"
+UL_CORNER = "┌"
+
+LR_CORNER = "┘"
+UR_CORNER = "┐"
