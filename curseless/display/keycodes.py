@@ -1,0 +1,8 @@
+CTLC = 'CTCL'
+RET = 'RET'
+TAB = 'TAB'
+LEFT = 'LEFT'
+RIGHT = 'RIGHT'
+DEL = 'DEL'
+UP = 'UP'
+DOWN = 'DOWN'
