@@ -23,5 +23,5 @@ class InputManager:
     def add_handler(self, handler):
         self.callback = handler
 
-    def remove_handler(self):
+    def remove_handler(self, handler):
         self.callback = None
