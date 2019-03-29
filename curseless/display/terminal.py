@@ -29,10 +29,14 @@ class Terminal:
     def add_input(self, location, text, on_key, echo):
         self.input_manager.add_handler(self.wrapper(location, on_key, echo))
 
-    def text(self, location: Location, text: str, style) -> None:
+    def text(self, location: Location, text: str, style=[]) -> None:
         self.display.text(location, text, style)
 
-    def update(self, location: Location, old_text, text: str, style) -> None:
+    def update(self,
+               location: Location,
+               old_text: str,
+               text: str,
+               style=[]) -> None:
         self.display.update(location, old_text, text, style)
 
     def clear_input(self):
