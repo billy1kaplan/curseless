@@ -4,13 +4,19 @@ from .keycodes import CTLC, RET, TAB, LEFT, RIGHT, DEL, UP, DOWN
 class InputFSM:
     @staticmethod
     def fromText(text):
-        return InputFSM(index=len(text), lines=text.split('\n'))
+        lines = text.split('\n')
+        return InputFSM(lines=text.split('\n'), index=len(lines[-1]), span=len(lines))
 
     """ A state machine for keeping track of an individual text input """
     def __init__(self, lines=[''], index=0, span=0):
         self.lines = lines
         self.index = index
         self.span = span
+
+    def update(self, text):
+        self.lines = text.split('\n')
+        self.index = len(self.lines[-1])
+        self.span = len(self.lines) - 1
 
     def insert(self, char):
         line = self.span
