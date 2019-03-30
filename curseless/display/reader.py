@@ -1,5 +1,7 @@
 import sys
 
+import threading
+
 from .keycodes import CTLC, RET, TAB, LEFT, RIGHT, DEL, UP, DOWN
 
 
@@ -9,8 +11,10 @@ class Reader:
     ascii character or into a command code.
     """
 
-    def __init__(self, loop):
+    def __init__(self, loop, executor):
         self.loop = loop
+        self.executor = executor
+        self.stoprequest = threading.Event()
 
     def register(self, call_back):
         """ Registers a call_back on the keyboard input.
@@ -25,10 +29,13 @@ class Reader:
         """
         def sync_callback(*args, **kwargs):
             self.loop.call_soon_threadsafe(call_back, *args, **kwargs)
-        self.loop.run_in_executor(None, self._key_reader, sync_callback)
+        self.loop.run_in_executor(self.executor, self._key_reader, sync_callback)
+
+    def shutdown(self):
+        self.stoprequest.set()
 
     def _key_reader(self, call_back):
-        while True:
+        while not self.stoprequest.isSet():
             char = ord(sys.stdin.read(1))
 
             if char == 3:
