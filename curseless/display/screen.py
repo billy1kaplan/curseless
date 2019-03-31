@@ -5,7 +5,7 @@ from functools import reduce
 from typing import Dict, List, Union
 
 from curseless.location import Location
-from .styles import HIGHLIGHT, DIM, DEFAULT, RED
+from .styles import HIGHLIGHT, DIM, DEFAULT, RED, GREEN
 
 
 Style = Union[str, List[str]]
@@ -22,12 +22,14 @@ class Display:
         styles as described in the styles file
         '''
         curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
+        curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
 
         attrs = defaultdict(int, {
             HIGHLIGHT: curses.A_STANDOUT,
             DIM: curses.A_DIM,
             DEFAULT: 0,
-            RED: curses.color_pair(1)
+            RED: curses.color_pair(1),
+            GREEN: curses.color_pair(2)
         })
 
         return Display(screen, attrs)
