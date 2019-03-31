@@ -6,7 +6,8 @@ from ..inputmanager import InputManager
 
 class TestInputManager(unittest.TestCase):
     def setUp(self):
-        self.input_manager = InputManager(lambda x: x)
+        reader = Mock()
+        self.input_manager = InputManager(reader)
 
     def test_calls_callback(self):
         mock = Mock()

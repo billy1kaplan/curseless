@@ -29,7 +29,9 @@ class Reader:
         """
         def sync_callback(*args, **kwargs):
             self.loop.call_soon_threadsafe(call_back, *args, **kwargs)
-        self.loop.run_in_executor(self.executor, self._key_reader, sync_callback)
+        self.loop.run_in_executor(self.executor,
+                                  self._key_reader,
+                                  sync_callback)
 
     def shutdown(self):
         self.stoprequest.set()

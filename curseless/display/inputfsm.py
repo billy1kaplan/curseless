@@ -4,12 +4,16 @@ from .keycodes import CTLC, RET, TAB, LEFT, RIGHT, DEL, UP, DOWN
 class InputFSM:
     @staticmethod
     def fromText(text):
+        """
+        Allows initialization of the state machine based on an existing string
+        """
         lines = text.split('\n')
-        return InputFSM(lines=text.split('\n'), index=len(lines[-1]), span=len(lines))
-
+        return InputFSM(lines=text.split('\n'),
+                        index=len(lines[-1]),
+                        span=len(lines) - 1)
     """ A state machine for keeping track of an individual text input """
     def __init__(self, lines=[''], index=0, span=0):
-        self.lines = lines
+        self.lines = lines[::]
         self.index = index
         self.span = span
 
@@ -39,9 +43,7 @@ class InputFSM:
         self.index -= 1
 
     def clear(self):
-        self.lines = ['']
-        self.index = 0
-        self.span = 0
+        self.update('')
 
     def _receive_return(self):
         self.lines.insert(self.span + 1, '')

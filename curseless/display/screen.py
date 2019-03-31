@@ -45,7 +45,7 @@ class Display:
         self.screen = screen
         self.attrs = attrs
 
-    def text(self, loc: Location, text: str, style: Style = DEFAULT):
+    def render_text(self, loc: Location, text: str, style: Style = DEFAULT):
         '''
         Takes a chunk of text and renders it on the terminal at a given
         location with a particular style.
@@ -62,36 +62,15 @@ class Display:
             self.screen.addstr(loc.y + i, loc.x, line, display_style)
 
     def _mix_styles(self, style: Style) -> int:
-        if isinstance(style, str):
+        if not style or isinstance(style, str):
             return self.attrs[style]
         return reduce(lambda acc, cur: acc | self.attrs[cur], style, 0)
 
-    def update(self,
-               loc: Location,
-               old_text: str,
-               text: str,
-               style: Style = DEFAULT) -> None:
-        '''
-        Clears a chunk of text and then writes new text to the same location
-
-        Parameters:
-        loc : specifies the absolute location to render the text
-        old_text : the text to be replaced
-        text : the new text to display on screen
-        style : a constant that specifies the style of the rendered string
-        '''
-        old_h, old_w = self._height(old_text), self._max_width(old_text)
-
-        for i in range(old_h):
-            self.screen.addstr(loc.y + i, loc.x, ' ' * old_w)
-
-        self.text(loc, text, style=style)
-
-    def _max_width(self, text):
-        return max([len(line) for line in text.split('\n')])
-
-    def _height(self, text):
-        return text.count('\n') + 1
+    def dimensions(self):
+        """
+        Returns dimensions in the form (y, x)
+        """
+        return self.screen.getmaxyx()
 
     def draw(self, focus: Location) -> None:
         '''
