@@ -12,19 +12,19 @@ class InputManager:
         A callback to register with <= the register calls this on
         key press
         """
-        self.callback = None
+        self.callback = []
         self.reader = reader
         reader.register(self.handle_input)
 
     def handle_input(self, code):
-        if self.callback:
-            self.callback(code)
+        for callback in self.callback:
+            callback(code)
 
     def add_handler(self, handler):
-        self.callback = handler
+        self.callback.append(handler)
 
     def remove_handler(self, handler):
-        self.callback = None
+        self.callback.clear()
 
     def shutdown(self):
         self.reader.shutdown()
