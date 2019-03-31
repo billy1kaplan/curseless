@@ -49,7 +49,7 @@ class Reader:
                 call_back(RET)
             elif char == 27:
                 next1, next2 = ord(sys.stdin.read(1)), ord(sys.stdin.read(1))
-                if next1 == 91:
+                if next1 == 91 or next1 == 79:
                     if next2 == 68:
                         call_back(LEFT)
                     elif next2 == 67:
